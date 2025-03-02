@@ -6,24 +6,6 @@ The task implements a BERT (Bidirectional Encoder Representations from Transform
 1. Masked Language Modeling (MLM) Task:
 Model Architecture:
 The BERT model consists of multiple encoder layers, each containing a multi-head self-attention mechanism and a position-wise feedforward network.
-The encoder layers are stacked using nn.ModuleList.
-The model includes additional linear and activation layers for downstream tasks: fc, linear, norm, and classifier.
-The decoder for the masked language model (MLM) task shares weights with the embedding layer.
-Forward Pass:
-The forward method takes input_ids (token indices), segment_ids (segment indices), and masked_pos (positions of masked tokens) as inputs.
-The input undergoes embedding, followed by multiple encoder layers.
-The encoder self-attention mask is generated to handle padding tokens.
-The output from the encoder layers is used to predict the next sentence (logits_nsp) based on the first token's representation and predict masked tokens (logits_lm) by attending to the masked positions.
-Loss Calculation:
-Two losses are calculated for the MLM task:
-loss_lm: CrossEntropyLoss between predicted masked tokens (logits_lm) and actual masked tokens (masked_tokens).
-loss_nsp: CrossEntropyLoss between predicted next sentence labels (logits_nsp) and actual labels (isNext).
-Overall Loss:
-The overall loss is the sum of MLM and NSP losses: loss = loss_lm + loss_nsp.
-Training Loop:
-The model is trained using the Adam optimizer with a learning rate of 0.001 for 500 epochs.
-The training loop involves forward pass, loss calculation, backpropagation, and parameter updates.
-The training progress is monitored, and the loss is printed every 100 epochs.
 
 2. Dataset and Data Generation:
 Dataset:
@@ -41,8 +23,6 @@ Training a BERT model on a simple wiki dataset for a masked language modeling ta
 Web Application
 ======================================
 Flask web application for semantic search using a pre-trained sentence transformer model. 
-
-
 
 The web app allows users to input a query through an HTML form.
 On form submission, the entered query is processed in the backend.
